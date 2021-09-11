@@ -20,3 +20,9 @@ In order to contribute, the following steps should be taken:
 A branch should be short-running, like within a day or two, it should be ready to merge.
 
 ## Technology
+We use HTML5 canvas element for rendering.
+The game logic is written in Javascript.
+Recommended editor is WebStorm (JetBrains), which could be activated using the iit email address.
+
+## Game
+[Play game!](index.html)
