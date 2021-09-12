@@ -100,3 +100,12 @@ function loop() {
 
 loop();
 ```
+
+Code for rotating:
+```
+ctx.save();
+ctx.translate(canvas.width/2,canvas.height/2);
+ctx.rotate(270*Math.PI/180);
+//draw here ...
+ctx.restore();
+```
