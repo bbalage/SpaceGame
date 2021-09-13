@@ -1,4 +1,4 @@
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
-let base_image = undefined;
-let should_draw = false;
+canvas = document.getElementById("c");
+ctx = canvas.getContext("2d");
+base_image = undefined;
+should_draw = false;
