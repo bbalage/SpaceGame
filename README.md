@@ -1,4 +1,5 @@
 # Space game
+[Play game!](https://bbalage.github.io/SpaceGame/index.html)
 
 The title of this game will be set later.
 
@@ -53,9 +54,6 @@ A possible flow of work (when things are the simplest):
 6. `git push origin -u example-branch`
 7. Create pull request online.
 8. If your changes are accepted: `git checkout master; git pull`. Otherwise, repeat from 3.
-
-## Game
-[Play game!](index.html)
 
 # Hungarian
 A játék címét még később megadjuk.
