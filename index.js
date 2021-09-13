@@ -1,8 +1,3 @@
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
-let base_image = undefined;
-let should_draw = false;
-
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
