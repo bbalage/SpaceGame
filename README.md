@@ -24,6 +24,36 @@ We use HTML5 canvas element for rendering.
 The game logic is written in Javascript.
 Recommended editor is WebStorm (JetBrains), which could be activated using the iit email address.
 
+## Git help
+Some helping notes for using git.
+
+I personally read the first few chapters of [this book](https://git-scm.com/book/en/v2).
+However, I wrote some shorter manuals below. The most useful commands are:
+- `git clone https://github.com/bbalage/SpaceGame.git` This downloads the repository for your local computer.
+- `git log` Shows the history of the current branch. Press *q* to quit from the history.
+- `git status` Show which files are in the staging area, which have unstaged changes and which are not yet added to version control.
+- `git add <filename>` Add file or files to the staging area (you can use regular expressions, like `git add *`)
+- `git commit` Commits all the changes in the staging area. First, it opens up an editor to write a commit message. (commit message should be short and should describe what is in the commit)
+- `git checkout` Move the HEAD to another branch or commit. Effectively go to another version of the code. You should have all changes committed to use this (or see `git stash`)
+- `git checkout -b <new branch's name>` Create a branch in place and move the head to it.
+- `git push origin` Send your version of the code to the remote repository (github). Use `git push origin -u branch-name` if your branch wasn't pushed before.
+- `git pull` Download the latest version of the remote repository and fast-forward your current branch to its newest version if possible.
+
+Setup is possibly needed before you can use git:
+1. `git config user.name "Happy Person"`
+2. `git config user.email happy@gmail.com`
+3. `git config core.editor notepad` (or nano, or any editor you have)
+
+A possible flow of work (when things are the simplest):
+1. `git pull`
+2. `git checkout -b example-branch`
+3. Work on files.
+4. `git add *`
+5. `git commit`
+6. `git push origin -u example-branch`
+7. Create pull request online.
+8. If your changes are accepted: `git checkout master; git pull`. Otherwise, repeat from 3.
+
 ## Game
 [Play game!](index.html)
 
