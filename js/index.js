@@ -5,10 +5,10 @@ function init () {
 }
 
 function keyDownHandler(e) {
-    return null;
+    inputCtx[e.code] = true;
 }
 function keyUpHandler(e) {
-    return null;
+    inputCtx[e.code] = false;
 }
 function mouseMoveHandler(e) {
     return null;
