@@ -16,7 +16,19 @@ function mouseMoveHandler(e) {
 
 function draw() {
     drawRotation(spaceship);
-    ctx.drawImage(spaceship.sprite, spaceship.x, spaceship.y, 29, 21.5);
+    drawSpaceship(spaceship);
+}
+
+function drawSpaceship(spaceship) {
+    ctx.save();
+    const spaceshipCenter = {
+        x: spaceship.x + spaceship.width / 2,
+        y: spaceship.y + spaceship.height / 2
+    }
+    ctx.translate(canvasCenter.x - spaceshipCenter.x, canvasCenter.y - spaceshipCenter.y);
+    ctx.rotate(spaceship.rotation*Math.PI/180);
+    ctx.drawImage(spaceship.sprite, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+    ctx.restore();
 }
 
 function loop() {
