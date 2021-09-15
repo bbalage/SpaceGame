@@ -3,8 +3,8 @@ class Spaceship {
     static elementaryTurn = 2;
 
     constructor() {
-        this.x = 0;
-        this.y = 0;
+        this.x = 10;
+        this.y = 10;
         this.width = 29;
         this.height = 21.5;
         this.rotation = 0;
