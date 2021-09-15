@@ -1,30 +1,28 @@
 class Spaceship {
 
-    static elementaryTurn = 5;
-    static turnSlowerFactor = 2;
+    static elementaryTurn = 2;
+
     constructor() {
         this.x = 10;
         this.y = 10;
-        this.rotate = 0;
+        this.rotation = 0;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
     }
 
     /**
-     * Change the rotate member to be closer to the targetAngle.
+     * Change the rotation member clockwise or anti-clockwise by elementaryTurn.
      *
-     * @param targetAngle The angle which is desired for the spaceship.
+     * @param direction if lower than zero, turn anti-clockwise, otherwise, turn clockwise.
      */
-    rotateTo(targetAngle) {
-        //1. Determine the direction of the rotation
-        const diff = targetAngle - this.rotate;
-        const absDiff = Math.abs(diff);
-        if (absDiff <= Spaceship.elementaryTurn) {
-            this.rotate = targetAngle;
-            return;
+    rotate(direction) {
+        this.rotation += direction > 0 ? Spaceship.elementaryTurn: -Spaceship.elementaryTurn;
+        if (this.rotation >= 360) {
+            this.rotation -= 360;
         }
-        const totalNeededTurn = absDiff < 180 ? diff : -diff;
-        this.rotate = this.rotate + totalNeededTurn / Spaceship.turnSlowerFactor;
+        if (this.rotation < 0) {
+            this.rotation += 360;
+        }
     }
 
     //Create functions that move the spaceship

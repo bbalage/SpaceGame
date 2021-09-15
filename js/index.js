@@ -15,10 +15,12 @@ function mouseMoveHandler(e) {
 }
 
 function draw() {
+    drawRotation(spaceship);
     ctx.drawImage(spaceship.sprite, spaceship.x, spaceship.y, 29, 21.5);
 }
 
 function loop() {
+    handleInputCtx();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw();
     requestAnimationFrame(loop);
