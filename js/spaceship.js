@@ -8,6 +8,7 @@ class Spaceship {
         this.width = 29;
         this.height = 21.5;
         this.rotation = 0;
+        this.speed = 1;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
     }
