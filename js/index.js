@@ -1,3 +1,16 @@
+
+
+scaleFillNative = Math.max(deviceWidth / nativeWidth, deviceHeight / nativeHeight);
+
+ctx.setTransform(
+    scaleFillNative,0,
+    0,scaleFillNative,
+    Math.floor(deviceWidth/2),
+    Math.floor(deviceHeight/2)
+);
+
+ctx.imageSmoothingEnabled = false;
+
 function init () {
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
@@ -34,7 +47,7 @@ function drawSpaceship(spaceship) {
 
 function loop() {
     handleInputCtx();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(-800, -600, nativeWidth, nativeHeight);
     draw();
     requestAnimationFrame(loop);
 }
