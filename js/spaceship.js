@@ -3,10 +3,10 @@ class Spaceship {
     static elementaryTurn = 2;
 
     constructor() {
-        this.x = 0;
-        this.y = 300;
-        this.width = 105;
-        this.height = 120;
+        this.x = canvas.width / 2;
+        this.y = canvas.height * 0.8;
+        this.width = 639 * 0.1;
+        this.height = 787 * 0.1;
         this.rotation = 0;
         this.speed = 3;
         this.sprite = new Image();
