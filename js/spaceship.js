@@ -7,8 +7,12 @@ class Spaceship {
         this.y = 300;
         this.width = 105;
         this.height = 120;
+        this.mass = 10;
+        this.trusterForce = 1;
         this.rotation = 0;
-        this.speed = 3;
+        this.inertia = this.trusterForce / this.mass;
+        this.xspeed = 0;
+        this.yspeed = 0;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
     }
@@ -29,6 +33,8 @@ class Spaceship {
     }
 
     //Create functions that move the spaceship
+
+
 }
 
 const spaceship = new Spaceship();

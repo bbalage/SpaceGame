@@ -47,6 +47,7 @@ function drawSpaceship(spaceship) {
 
 function loop() {
     handleInputCtx();
+    moveSpaceship();
     ctx.clearRect(-800, -600, nativeWidth, nativeHeight);
     draw();
     requestAnimationFrame(loop);

@@ -20,11 +20,20 @@ function handleMove () {
         return;
     }
     if (inputCtx.KeyW) {
-        spaceship.x += Math.sin(spaceship.rotation*Math.PI/180) * spaceship.speed;
-        spaceship.y -= Math.cos(spaceship.rotation*Math.PI/180) * spaceship.speed;
+        spaceship.xspeed += Math.sin(spaceship.rotation * Math.PI / 180) * spaceship.inertia
+        spaceship.yspeed -= Math.cos(spaceship.rotation*Math.PI/180) * spaceship.inertia;
+        //spaceship.x += Math.sin(spaceship.rotation*Math.PI/180) * spaceship.speed;
+        //spaceship.y -= Math.cos(spaceship.rotation*Math.PI/180) * spaceship.speed;
     }
     if (inputCtx.KeyS) {
-        spaceship.x -= Math.sin(spaceship.rotation*Math.PI/180) * spaceship.speed;
-        spaceship.y += Math.cos(spaceship.rotation*Math.PI/180) * spaceship.speed;
+        spaceship.xspeed -= Math.sin(spaceship.rotation*Math.PI/180) * spaceship.inertia;
+        spaceship.yspeed += Math.cos(spaceship.rotation*Math.PI/180) * spaceship.inertia;
+        //spaceship.x -= Math.sin(spaceship.rotation*Math.PI/180) * spaceship.speed;
+        //spaceship.y += Math.cos(spaceship.rotation*Math.PI/180) * spaceship.speed;
     }
+}
+
+function moveSpaceship() {
+    spaceship.x += spaceship.xspeed;
+    spaceship.y += spaceship.yspeed;
 }
