@@ -1,6 +1,7 @@
 function handleInputCtx() {
     handleTurn();
     handleMove();
+    moveSpaceship();
 }
 
 function handleTurn() {
