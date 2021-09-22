@@ -3,12 +3,16 @@ class Spaceship {
     static elementaryTurn = 2;
 
     constructor() {
+        this.mass = 10;
+        this.thrusterForce = 1;
         this.x = canvas.width / 2;
         this.y = canvas.height * 0.8;
         this.width = 639 * 0.1;
         this.height = 787 * 0.1;
         this.rotation = 0;
-        this.speed = 3;
+        this.acceleration = this.thrusterForce / this.mass;
+        this.xspeed = 0;
+        this.yspeed = 0;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
     }
@@ -29,6 +33,8 @@ class Spaceship {
     }
 
     //Create functions that move the spaceship
+
+
 }
 
 const spaceship = new Spaceship();
