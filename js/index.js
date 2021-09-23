@@ -22,15 +22,18 @@ function draw() {
 }
 
 function drawSpaceship(spaceship) {
+    camera.follow();
+    const spaceshipLocal = camera.toCameraView(spaceship);
+    console.log(spaceshipLocal)
     const spaceshipCenter = {
-        x: spaceship.x + spaceship.width / 2,
-        y: spaceship.y + spaceship.height / 2
+        x: spaceshipLocal.x + spaceship.width / 2,
+        y: spaceshipLocal.y + spaceship.height / 2
     }
     ctx.save();
     ctx.translate(spaceshipCenter.x, spaceshipCenter.y);
     ctx.rotate(spaceship.rotation*Math.PI/180);
     ctx.translate(-spaceshipCenter.x, -spaceshipCenter.y);
-    ctx.drawImage(spaceship.sprite, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+    ctx.drawImage(spaceship.sprite, spaceshipLocal.x, spaceshipLocal.y, spaceship.width, spaceship.height);
     ctx.restore();
 }
 
