@@ -6,7 +6,7 @@ class Spaceship {
         this.mass = 10;
         this.thrusterForce = 1;
         this.x = canvas.width / 2;
-        this.y = canvas.height * 0.8;
+        this.y = canvas.height / 2;
         this.width = 639 * 0.1;
         this.height = 787 * 0.1;
         this.rotation = 0;

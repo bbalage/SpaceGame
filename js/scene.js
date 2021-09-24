@@ -25,18 +25,42 @@ class Camera {
      */
     toCameraView(objectInPlaygroundSpace) {
         const objectInCameraSpace = {}
-        objectInCameraSpace.x = this.x + objectInPlaygroundSpace.x;
-        objectInCameraSpace.y = this.y + objectInPlaygroundSpace.y;
+        objectInCameraSpace.x = objectInPlaygroundSpace.x - this.x;
+        objectInCameraSpace.y = objectInPlaygroundSpace.y - this.y;
         return objectInCameraSpace;
     }
 
+    /**
+     * Checks whether the followed object(s) are in the camera viewport and changes the camera
+     * position if not.
+     */
     follow() {
         const followedInCameraSpace = this.toCameraView(this.followed);
-        const dx = this.viewportWidth - followedInCameraSpace.x;
-        if (dx < 0) {
-            this.x -= dx;
+        this.followX(followedInCameraSpace)
+        this.followY(followedInCameraSpace)
+    }
+
+    followX(followedInCameraSpace) {
+        const width = this.viewportWidth - this.padding * 2;
+        const dx = width - followedInCameraSpace.x;
+        if (dx < this.followed.width) {
+            this.x -= dx - this.followed.width;
+        }
+        else if (dx > width - 2 * this.padding) {
+            this.x += followedInCameraSpace.x - 2 * this.padding;
+        }
+    }
+
+    followY(followedInCameraSpace) {
+        const height = this.viewportHeight - this.padding * 2;
+        const dy = height - followedInCameraSpace.y;
+        if (dy < this.followed.height) {
+            this.y -= dy - this.followed.height;
+        }
+        else if (dy > height - this.padding) {
+            this.y += followedInCameraSpace.y - this.padding;
         }
     }
 }
 
-const camera = new Camera(deviceWidth, deviceHeight, spaceship, 20);
+const camera = new Camera(deviceWidth, deviceHeight, spaceship, 10);
