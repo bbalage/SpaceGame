@@ -40,13 +40,23 @@ class Camera {
         this.y = this.followOnAxis(followedInCameraSpace.y, this.followed.height, this.y, this.viewportHeight);
     }
 
+    /**
+     * Checks whether the followed object is visible on a certain axis (X or Y) and changes the
+     * camera position accordingly.
+     * @param followedCoor The coordinate of the followed object along the given axis (an X or Y coordinate)
+     * in camera space (not global space).
+     * @param followedSize The size of the followed object along the certain axis (either the width or the height).
+     * @param viewportCoor The X or Y coordinate of the camera.
+     * @param viewportSize The width or the height of the camera.
+     * @returns {*} The modified value of the viewportCoor parameter.
+     */
     followOnAxis(followedCoor, followedSize, viewportCoor, viewportSize) {
         const depaddedSize = viewportSize - this.padding;
-        const d = depaddedSize - followedCoor;
-        if (d < followedSize) {
-            viewportCoor -= d - followedSize;
+        const difference = depaddedSize - followedCoor;
+        if (difference < followedSize) {
+            viewportCoor -= difference - followedSize;
         }
-        else if (d > depaddedSize - this.padding) {
+        else if (difference > depaddedSize - this.padding) {
             viewportCoor += followedCoor - this.padding;
         }
         return viewportCoor
