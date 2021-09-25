@@ -1,8 +1,8 @@
 const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 
-deviceWidth = window.innerWidth;
-deviceHeight = window.innerHeight;
+let deviceWidth = window.innerWidth;
+let deviceHeight = window.innerHeight;
 
 canvas.width = deviceWidth;
 canvas.height = deviceHeight;
