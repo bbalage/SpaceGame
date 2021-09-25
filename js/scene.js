@@ -36,31 +36,21 @@ class Camera {
      */
     follow() {
         const followedInCameraSpace = this.toCameraView(this.followed);
-        this.followX(followedInCameraSpace)
-        this.followY(followedInCameraSpace)
+        this.x = this.followOnAxis(followedInCameraSpace.x, this.followed.width, this.x, this.viewportWidth);
+        this.y = this.followOnAxis(followedInCameraSpace.y, this.followed.height, this.y, this.viewportHeight);
     }
 
-    followX(followedInCameraSpace) {
-        const width = this.viewportWidth - this.padding * 2;
-        const dx = width - followedInCameraSpace.x;
-        if (dx < this.followed.width) {
-            this.x -= dx - this.followed.width;
+    followOnAxis(followedCoor, followedSize, viewportCoor, viewportSize) {
+        const depaddedSize = viewportSize - this.padding;
+        const d = depaddedSize - followedCoor;
+        if (d < followedSize) {
+            viewportCoor -= d - followedSize;
         }
-        else if (dx > width - 2 * this.padding) {
-            this.x += followedInCameraSpace.x - 2 * this.padding;
+        else if (d > depaddedSize - this.padding) {
+            viewportCoor += followedCoor - this.padding;
         }
-    }
-
-    followY(followedInCameraSpace) {
-        const height = this.viewportHeight - this.padding * 2;
-        const dy = height - followedInCameraSpace.y;
-        if (dy < this.followed.height) {
-            this.y -= dy - this.followed.height;
-        }
-        else if (dy > height - this.padding) {
-            this.y += followedInCameraSpace.y - this.padding;
-        }
+        return viewportCoor
     }
 }
 
-const camera = new Camera(deviceWidth, deviceHeight, spaceship, 10);
+const camera = new Camera(deviceWidth, deviceHeight, spaceship, 50);
