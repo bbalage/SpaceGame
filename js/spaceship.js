@@ -2,7 +2,7 @@ class Spaceship {
 
     static elementaryTurn = 2;
 
-    constructor() {
+    constructor(spaceshipDesc) {
         this.mass = 10;
         this.thrusterForce = 1;
         this.x = canvas.width / 2;
@@ -15,6 +15,12 @@ class Spaceship {
         this.yspeed = 0;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
+    }
+
+    extractHitBoxes(spaceshipDesc) {
+        for (let i = 0; i < spaceshipDesc.hitBoxIntervals.length; i++) {
+            //TODO: Create hit box intervals!
+        }
     }
 
     /**
@@ -32,9 +38,9 @@ class Spaceship {
         }
     }
 
-    //Create functions that move the spaceship
+    //TODO: Move functions that move the spaceship here!
 
 
 }
 
-const spaceship = new Spaceship();
+const spaceship = new Spaceship(spaceshipDesc);

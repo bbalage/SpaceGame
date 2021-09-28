@@ -17,14 +17,13 @@ function mouseMoveHandler(e) {
 }
 
 function draw() {
-    drawRotation(spaceship);
+    drawDebugData(spaceship);
     drawSpaceship(spaceship);
 }
 
 function drawSpaceship(spaceship) {
     camera.follow();
     const spaceshipLocal = camera.toCameraView(spaceship);
-    // console.log(spaceshipLocal)
     const spaceshipCenter = {
         x: spaceshipLocal.x + spaceship.width / 2,
         y: spaceshipLocal.y + spaceship.height / 2
