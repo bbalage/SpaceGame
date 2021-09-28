@@ -15,12 +15,36 @@ class Spaceship {
         this.yspeed = 0;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
+        this.hitBoxIntervals = []
+        this.extractHitBoxIntervals(spaceshipDesc);
     }
 
-    extractHitBoxes(spaceshipDesc) {
-        for (let i = 0; i < spaceshipDesc.hitBoxIntervals.length; i++) {
-            //TODO: Create hit box intervals!
+    extractHitBoxIntervals(spaceshipDesc) {
+        const hitBoxIntervals = spaceshipDesc.hitBoxIntervals;
+        for (let i = 0; i < hitBoxIntervals.length; i++) {
+            const hitBoxes = this.extractHitBoxes(hitBoxIntervals[i].hitBoxes);
+            this.hitBoxIntervals.push({
+                "start": hitBoxIntervals[i].start,
+                "end": hitBoxIntervals[i].end,
+                "hitBoxes": hitBoxes
+            });
         }
+    }
+
+    extractHitBoxes(hitBoxes) {
+        const hitBoxObjects = []
+        for (let i = 0; i < hitBoxes.length; i++) {
+            let hitBox = new HitBoxUtils(
+                hitBoxes[i].x,
+                hitBoxes[i].y,
+                hitBoxes[i].width,
+                hitBoxes[i].height
+            )
+            hitBoxObjects.push(
+                hitBox
+            )
+        }
+        return hitBoxObjects;
     }
 
     /**
@@ -29,7 +53,7 @@ class Spaceship {
      * @param direction if lower than zero, turn anti-clockwise, otherwise, turn clockwise.
      */
     rotate(direction) {
-        this.rotation += direction > 0 ? Spaceship.elementaryTurn: -Spaceship.elementaryTurn;
+        this.rotation += direction > 0 ? Spaceship.elementaryTurn : -Spaceship.elementaryTurn;
         if (this.rotation >= 360) {
             this.rotation -= 360;
         }
