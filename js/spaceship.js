@@ -22,29 +22,9 @@ class Spaceship {
     extractHitBoxIntervals(spaceshipDesc) {
         const hitBoxIntervals = spaceshipDesc.hitBoxIntervals;
         for (let i = 0; i < hitBoxIntervals.length; i++) {
-            const hitBoxes = this.extractHitBoxes(hitBoxIntervals[i].hitBoxes);
-            this.hitBoxIntervals.push({
-                "start": hitBoxIntervals[i].start,
-                "end": hitBoxIntervals[i].end,
-                "hitBoxes": hitBoxes
-            });
+            const hitBoxInterval = new HitBoxInterval(hitBoxIntervals[i])
+            this.hitBoxIntervals.push(hitBoxInterval);
         }
-    }
-
-    extractHitBoxes(hitBoxes) {
-        const hitBoxObjects = []
-        for (let i = 0; i < hitBoxes.length; i++) {
-            let hitBox = new HitBoxUtils(
-                hitBoxes[i].x,
-                hitBoxes[i].y,
-                hitBoxes[i].width,
-                hitBoxes[i].height
-            )
-            hitBoxObjects.push(
-                hitBox
-            )
-        }
-        return hitBoxObjects;
     }
 
     /**
