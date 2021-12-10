@@ -2,7 +2,7 @@ class Spaceship {
 
     static elementaryTurn = 2;
 
-    constructor() {
+    constructor(canvas) {
         this.mass = 10;
         this.thrusterForce = 1;
         this.x = canvas.width / 2;
@@ -37,4 +37,4 @@ class Spaceship {
 
 }
 
-const spaceship = new Spaceship();
+//const spaceship = new Spaceship(canvas);
