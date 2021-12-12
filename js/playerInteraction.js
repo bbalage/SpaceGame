@@ -1,10 +1,10 @@
-function handleInputCtx() {
-    handleTurn();
-    handleMove();
+function handleInputCtx(inputCtx) {
+    handleTurn(inputCtx);
+    handleMove(inputCtx);
     moveSpaceship();
 }
 
-function handleTurn() {
+function handleTurn(inputCtx) {
     if (inputCtx.KeyA && inputCtx.KeyD) {
         return;
     }
@@ -16,7 +16,7 @@ function handleTurn() {
     }
 }
 
-function handleMove () {
+function handleMove (inputCtx) {
     if (inputCtx.KeyW && inputCtx.KeyS) {
         return;
     }
