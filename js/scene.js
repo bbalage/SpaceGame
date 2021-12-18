@@ -1,66 +1,69 @@
-class Playground {
+class Scene {
 
-    constructor() {
+    constructor(canvas, ctx, camera, spaceship) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        this.camera = camera;
+        this.spaceship = spaceship;
+        this.canvasLogger = new CanvasLogger();
+    }
+
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera);
+        this.#drawSpaceship();
+    }
+
+    #drawSpaceship() {
+        this.camera.follow(this.spaceship);
+        const spaceshipLocal = this.camera.toCameraView(this.spaceship);
+        const spaceshipCenter = {
+            x: spaceshipLocal.x + this.spaceship.width / 2,
+            y: spaceshipLocal.y + this.spaceship.height / 2
+        }
+        this.ctx.save();
+        this.ctx.translate(spaceshipCenter.x, spaceshipCenter.y);
+        this.ctx.rotate(this.spaceship.rotation*Math.PI/180);
+        this.ctx.translate(-spaceshipCenter.x, -spaceshipCenter.y);
+        this.ctx.drawImage(
+            this.spaceship.sprite,
+            spaceshipLocal.x,
+            spaceshipLocal.y,
+            this.spaceship.width,
+            this.spaceship.height
+        );
+        this.ctx.restore();
+    }
+
+    handleInputCtx(inputCtx) {
+        this.#handleTurn(inputCtx);
+        this.#handleMove(inputCtx);
+        this.spaceship.moveSpaceship();
+    }
+
+    #handleTurn(inputCtx) {
+        if (inputCtx.KeyA && inputCtx.KeyD) {
+            return;
+        }
+        if (inputCtx.KeyA) {
+            this.spaceship.rotate(-1);
+        }
+        if (inputCtx.KeyD) {
+            this.spaceship.rotate(1);
+        }
+    }
+
+    #handleMove (inputCtx) {
+        if (inputCtx.KeyW && inputCtx.KeyS) {
+            return;
+        }
+        if (inputCtx.KeyW) {
+            this.spaceship.xspeed += Math.sin(this.spaceship.rotation * Math.PI / 180) * this.spaceship.acceleration
+            this.spaceship.yspeed -= Math.cos(this.spaceship.rotation*Math.PI/180) * this.spaceship.acceleration;
+        }
+        if (inputCtx.KeyS) {
+            this.spaceship.xspeed -= Math.sin(this.spaceship.rotation*Math.PI/180) * this.spaceship.acceleration;
+            this.spaceship.yspeed += Math.cos(this.spaceship.rotation*Math.PI/180) * this.spaceship.acceleration;
+        }
     }
 }
-
-class Camera {
-
-    constructor(width, height, followed, padding) {
-        this.x = 0;
-        this.y = 0;
-        this.viewportWidth = width;
-        this.viewportHeight = height;
-        this.padding = padding;
-        this.followed = followed;
-    }
-
-    /**
-     * Converts an object from global (playground) space into camera viewport space.
-     * Camera viewport space corresponds to the canvas space.
-     *
-     * @param objectInPlaygroundSpace An object that has the x, y, width, height properties
-     * @returns {{objectInCameraSpace}} An object with the x, y, width, height properties, all
-     * in canvas/camera space.
-     */
-    toCameraView(objectInPlaygroundSpace) {
-        const objectInCameraSpace = {}
-        objectInCameraSpace.x = objectInPlaygroundSpace.x - this.x;
-        objectInCameraSpace.y = objectInPlaygroundSpace.y - this.y;
-        return objectInCameraSpace;
-    }
-
-    /**
-     * Checks whether the followed object(s) are in the camera viewport and changes the camera
-     * position if not.
-     */
-    follow() {
-        const followedInCameraSpace = this.toCameraView(this.followed);
-        this.x = this.followOnAxis(followedInCameraSpace.x, this.followed.width, this.x, this.viewportWidth);
-        this.y = this.followOnAxis(followedInCameraSpace.y, this.followed.height, this.y, this.viewportHeight);
-    }
-
-    /**
-     * Checks whether the followed object is visible on a certain axis (X or Y) and changes the
-     * camera position accordingly.
-     * @param followedCoor The coordinate of the followed object along the given axis (an X or Y coordinate)
-     * in camera space (not global space).
-     * @param followedSize The size of the followed object along the certain axis (either the width or the height).
-     * @param viewportCoor The X or Y coordinate of the camera.
-     * @param viewportSize The width or the height of the camera.
-     * @returns {*} The modified value of the viewportCoor parameter.
-     */
-    followOnAxis(followedCoor, followedSize, viewportCoor, viewportSize) {
-        const depaddedSize = viewportSize - this.padding;
-        const difference = depaddedSize - followedCoor;
-        if (difference < followedSize) {
-            viewportCoor -= difference - followedSize;
-        }
-        else if (difference > depaddedSize - this.padding) {
-            viewportCoor += followedCoor - this.padding;
-        }
-        return viewportCoor
-    }
-}
-
-const camera = new Camera(deviceWidth, deviceHeight, spaceship, 50);

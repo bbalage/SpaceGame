@@ -1,18 +1,17 @@
 class Spaceship {
 
-    static elementaryTurn = 2;
-
-    constructor() {
+    constructor(startingX, startingY) {
         this.mass = 10;
         this.thrusterForce = 1;
-        this.x = canvas.width / 2;
-        this.y = canvas.height / 2;
+        this.x = startingX;
+        this.y = startingY;
         this.width = 639 * 0.1;
         this.height = 787 * 0.1;
         this.rotation = 0;
         this.acceleration = this.thrusterForce / this.mass;
         this.xspeed = 0;
         this.yspeed = 0;
+        this.elementaryTurn = 2;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
     }
@@ -23,7 +22,7 @@ class Spaceship {
      * @param direction if lower than zero, turn anti-clockwise, otherwise, turn clockwise.
      */
     rotate(direction) {
-        this.rotation += direction > 0 ? Spaceship.elementaryTurn: -Spaceship.elementaryTurn;
+        this.rotation += direction >= 0 ? this.elementaryTurn: -this.elementaryTurn;
         if (this.rotation >= 360) {
             this.rotation -= 360;
         }
@@ -32,9 +31,12 @@ class Spaceship {
         }
     }
 
-    //Create functions that move the spaceship
-
+    /**
+     * Change the spaceship's coordinates according to its current speed.
+     */
+    moveSpaceship() {
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+    }
 
 }
-
-const spaceship = new Spaceship();
