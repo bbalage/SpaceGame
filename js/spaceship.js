@@ -31,7 +31,12 @@ class Spaceship {
         }
     }
 
-    //Create functions that move the spaceship
-
+    /**
+     * Change the spaceship's coordinates according to its current speed.
+     */
+    moveSpaceship() {
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+    }
 
 }
