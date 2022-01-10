@@ -25,8 +25,9 @@ class Game {
 
         const padding = 10;
         const spaceShip = new Spaceship(canvasCenter.x, canvasCenter.y);
+        const asteroid = new Asteroid(100, 100);
         const camera = new Camera(0, 0, canvas.width, canvas.height, padding);
-        this.scene = new Scene(canvas, ctx, camera, spaceShip);
+        this.scene = new Scene(canvas, ctx, camera, spaceShip, asteroid);
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);

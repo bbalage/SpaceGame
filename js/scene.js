@@ -1,17 +1,21 @@
 class Scene {
 
-    constructor(canvas, ctx, camera, spaceship) {
+    constructor(canvas, ctx, camera, spaceship, asteroid) {
         this.canvas = canvas;
         this.ctx = ctx;
         this.camera = camera;
         this.spaceship = spaceship;
+        this.asteroid = asteroid;
         this.canvasLogger = new CanvasLogger();
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera);
+        this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera, this.asteroid);
         this.#drawSpaceship();
+        this.#drawAsteroids();
+        this.asteroid.rotate(1);
+        this.asteroid.moveAsteroid();
     }
 
     #drawSpaceship() {
@@ -33,6 +37,18 @@ class Scene {
             this.spaceship.height
         );
         this.ctx.restore();
+    }
+
+    #drawAsteroids() {
+
+        this.ctx.drawImage(
+            this.asteroid.sprite,
+            0,
+            0,
+            this.asteroid.width,
+            this.asteroid.height
+        );
+
     }
 
     handleInputCtx(inputCtx) {
