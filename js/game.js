@@ -24,7 +24,7 @@ class Game {
         }
 
         const padding = 10;
-        const spaceShip = new Spaceship(canvasCenter.x, canvasCenter.y);
+        const spaceShip = new Spaceship(descriptors.spaceship, canvasCenter.x, canvasCenter.y);
         const camera = new Camera(0, 0, canvas.width, canvas.height, padding);
         this.scene = new Scene(canvas, ctx, camera, spaceShip);
 

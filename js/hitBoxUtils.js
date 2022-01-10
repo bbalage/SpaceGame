@@ -24,11 +24,23 @@ class HitBoxInterval {
     constructor(hitBoxIntervalDescriptor) {
         this.start = hitBoxIntervalDescriptor.start;
         this.end = hitBoxIntervalDescriptor.end;
-        this.hitBoxes = this.extractHitBoxes(hitBoxIntervalDescriptor.hitBoxes);
+        this.hitBoxes = this.#extractHitBoxes(hitBoxIntervalDescriptor.hitBoxes);
     }
 
-    extractHitBoxes(hitBoxes) {
-        const hitBoxObjects = []
+    // TODO: Elementary turn should always be smaller than the smallest existing interval. Check somehow!
+    /**
+     * Determines based on the rotation whether this interval's hit boxes should be used.
+     * @param rotation The rotation of the object this HitBoxInterval belongs to.
+     * @return {number} 0 if no interval switch needed, 1 if the next interval is needed, -1 if the previous.
+     */
+    calcSwapDirection(rotation) {
+        if (rotation >= this.start && rotation < this.end) return 0;
+        else if (rotation < this.start) return -1;
+        else if (rotation >= this.end) return 1;
+    }
+
+    #extractHitBoxes(hitBoxes) {
+        const hitBoxObjects = [];
         for (let i = 0; i < hitBoxes.length; i++) {
             let hitBox = new HitBox(
                 hitBoxes[i].x,
@@ -42,13 +54,23 @@ class HitBoxInterval {
         }
         return hitBoxObjects;
     }
+}
 
-    /**
-     * Determines based on the rotation whether this interval's hit boxes should be used.
-     * @param rotation The rotation of the object this HitBoxInterval belongs to.
-     * @return {boolean} True if this should be active, false if not.
-     */
-    isActive(rotation) {
+class HitBoxIntervalContainer {
 
+    constructor(intervals) {
+        this.intervals = intervals;
+        this.currentIndex = 0;
+    }
+
+    handleRotation(rotation) {
+        const indexDirection = this.intervals[this.currentIndex].calcSwapDirection(rotation);
+        if (indexDirection === 0) return;
+        this.currentIndex += indexDirection;
+        if (this.currentIndex === -1) {
+            this.currentIndex = this.intervals.length - 1;
+        } else if (this.currentIndex === this.intervals.length) {
+            this.currentIndex = 0;
+        }
     }
 }
