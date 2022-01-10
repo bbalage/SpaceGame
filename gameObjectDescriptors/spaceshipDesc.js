@@ -1,6 +1,6 @@
 const spaceshipDesc = {
     "sprites": {
-        "normal": "img/spaceship.png"
+        "normal": "img/spaceship.png" //TODO: Use this!
     },
     "hitBoxIntervals": [
         {

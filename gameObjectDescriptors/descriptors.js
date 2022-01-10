@@ -1,0 +1,3 @@
+const descriptors = {
+    "spaceship": spaceshipDesc
+}
