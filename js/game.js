@@ -24,9 +24,10 @@ class Game {
         }
 
         const padding = 10;
-        const spaceShip = new Spaceship(descriptors.spaceship, canvasCenter.x, canvasCenter.y);
+        const container = new HitBoxIntervalContainer(descriptors.spaceship.hitBoxIntervals)
+        const spaceship = new Spaceship(container, canvasCenter.x, canvasCenter.y);
         const camera = new Camera(0, 0, canvas.width, canvas.height, padding);
-        this.scene = new Scene(canvas, ctx, camera, spaceShip);
+        this.scene = new Scene(canvas, ctx, camera, spaceship);
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);

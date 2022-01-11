@@ -1,6 +1,6 @@
 class Spaceship {
 
-    constructor(spaceshipDesc, startingX, startingY) {
+    constructor(hitBoxIntervalContainer, startingX, startingY) {
         this.mass = 10;
         this.thrusterForce = 1;
         this.x = startingX;
@@ -14,16 +14,7 @@ class Spaceship {
         this.elementaryTurn = 2;
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
-        this.hitBoxIntervals = []
-        this.extractHitBoxIntervals(spaceshipDesc);
-    }
-
-    extractHitBoxIntervals(spaceshipDesc) {
-        const hitBoxIntervals = spaceshipDesc.hitBoxIntervals;
-        for (let i = 0; i < hitBoxIntervals.length; i++) {
-            const hitBoxInterval = new HitBoxInterval(hitBoxIntervals[i])
-            this.hitBoxIntervals.push(hitBoxInterval);
-        }
+        this.hitBoxIntervalContainer = hitBoxIntervalContainer;
     }
 
     /**
@@ -33,6 +24,7 @@ class Spaceship {
      */
     rotate(direction) {
         this.rotation += direction >= 0 ? this.elementaryTurn: -this.elementaryTurn;
+        this.hitBoxIntervalContainer.handleRotation(this.rotation);
         if (this.rotation >= 360) {
             this.rotation -= 360;
         }

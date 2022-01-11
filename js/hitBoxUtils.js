@@ -24,7 +24,7 @@ class HitBoxInterval {
     constructor(hitBoxIntervalDescriptor) {
         this.start = hitBoxIntervalDescriptor.start;
         this.end = hitBoxIntervalDescriptor.end;
-        this.hitBoxes = this.#extractHitBoxes(hitBoxIntervalDescriptor.hitBoxes);
+        this.hitBoxes = HitBoxInterval.#extractHitBoxes(hitBoxIntervalDescriptor.hitBoxes);
     }
 
     // TODO: Elementary turn should always be smaller than the smallest existing interval. Check somehow!
@@ -39,7 +39,7 @@ class HitBoxInterval {
         else if (rotation >= this.end) return 1;
     }
 
-    #extractHitBoxes(hitBoxes) {
+    static #extractHitBoxes(hitBoxes) {
         const hitBoxObjects = [];
         for (let i = 0; i < hitBoxes.length; i++) {
             let hitBox = new HitBox(
@@ -58,8 +58,8 @@ class HitBoxInterval {
 
 class HitBoxIntervalContainer {
 
-    constructor(intervals) {
-        this.intervals = intervals;
+    constructor(hitBoxIntervals) {
+        this.intervals = HitBoxIntervalContainer.#extractHitBoxIntervals(hitBoxIntervals);
         this.currentIndex = 0;
     }
 
@@ -72,5 +72,14 @@ class HitBoxIntervalContainer {
         } else if (this.currentIndex === this.intervals.length) {
             this.currentIndex = 0;
         }
+    }
+
+    static #extractHitBoxIntervals(hitBoxIntervalsDesc) {
+        const hitBoxIntervals = [];
+        for (let i = 0; i < hitBoxIntervalsDesc.length; i++) {
+            const hitBoxInterval = new HitBoxInterval(hitBoxIntervalsDesc[i])
+            hitBoxIntervals.push(hitBoxInterval);
+        }
+        return hitBoxIntervals;
     }
 }
