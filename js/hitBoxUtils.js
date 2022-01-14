@@ -12,10 +12,10 @@ class HitBox {
      * @return {boolean} True if
      */
     isOverlapping(hitBox) {
-        return !(hitBox.x > this.x + this.width
-            || hitBox.x + hitBox.width < this.x
-            || hitBox.y > this.y + this.height
-            || hitBox.y + hitBox.height < this.y);
+        return hitBox.x < this.x + this.width
+            && hitBox.x + hitBox.width > this.x
+            && hitBox.y < this.y + this.height
+            && hitBox.y + hitBox.height > this.y;
     }
 }
 
