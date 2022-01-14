@@ -8,7 +8,7 @@ class HitBox {
     }
 
     /**
-     * @param hitBox {HitBox} The hit box we check for overlapping with this one.
+     * @param hitBox {HitBox} The hit box we check for overlapping with this hit box.
      * @return {boolean} True if
      */
     isOverlapping(hitBox) {
@@ -21,10 +21,10 @@ class HitBox {
 
 class HitBoxInterval {
 
-    constructor(hitBoxIntervalDescriptor) {
-        this.start = hitBoxIntervalDescriptor.start;
-        this.end = hitBoxIntervalDescriptor.end;
-        this.hitBoxes = HitBoxInterval.#extractHitBoxes(hitBoxIntervalDescriptor.hitBoxes);
+    constructor(start, end, hitBoxes) {
+        this.start = start;
+        this.end = end;
+        this.hitBoxes = hitBoxes;
     }
 
     // TODO: Elementary turn should always be smaller than the smallest existing interval. Check somehow!
@@ -38,28 +38,12 @@ class HitBoxInterval {
         else if (rotation < this.start) return -1;
         else if (rotation >= this.end) return 1;
     }
-
-    static #extractHitBoxes(hitBoxes) {
-        const hitBoxObjects = [];
-        for (let i = 0; i < hitBoxes.length; i++) {
-            let hitBox = new HitBox(
-                hitBoxes[i].x,
-                hitBoxes[i].y,
-                hitBoxes[i].width,
-                hitBoxes[i].height
-            )
-            hitBoxObjects.push(
-                hitBox
-            )
-        }
-        return hitBoxObjects;
-    }
 }
 
 class HitBoxIntervalContainer {
 
     constructor(hitBoxIntervals) {
-        this.intervals = HitBoxIntervalContainer.#extractHitBoxIntervals(hitBoxIntervals);
+        this.intervals = hitBoxIntervals;
         this.currentIndex = 0;
     }
 
@@ -74,12 +58,46 @@ class HitBoxIntervalContainer {
         }
     }
 
+    check
+}
+
+class HitBoxDataExtractor {
+
+    /**
+     * Serves to create classes from descriptor data.
+     * @param hitBoxIntervalsDesc The descriptor retrieved from the des
+     */
+    extractHitBoxDescriptor(hitBoxIntervalsDesc) {
+        const hitBoxIntervals = HitBoxDataExtractor.#extractHitBoxIntervals(hitBoxIntervalsDesc);
+        return new HitBoxIntervalContainer(hitBoxIntervals);
+    }
+
     static #extractHitBoxIntervals(hitBoxIntervalsDesc) {
         const hitBoxIntervals = [];
-        for (let i = 0; i < hitBoxIntervalsDesc.length; i++) {
-            const hitBoxInterval = new HitBoxInterval(hitBoxIntervalsDesc[i])
+        for (let hitBoxIntervalDesc of hitBoxIntervalsDesc) {
+            const hitBoxInterval = new HitBoxInterval(
+                hitBoxIntervalDesc.start,
+                hitBoxIntervalDesc.end,
+                HitBoxDataExtractor.#extractHitBoxes(hitBoxIntervalDesc.hitBoxes)
+            );
             hitBoxIntervals.push(hitBoxInterval);
         }
         return hitBoxIntervals;
+    }
+
+    static #extractHitBoxes(hitBoxesDesc) {
+        const hitBoxes = [];
+        for (let i = 0; i < hitBoxesDesc.length; i++) {
+            let hitBox = new HitBox(
+                hitBoxesDesc[i].x,
+                hitBoxesDesc[i].y,
+                hitBoxesDesc[i].width,
+                hitBoxesDesc[i].height
+            )
+            hitBoxes.push(
+                hitBox
+            )
+        }
+        return hitBoxes;
     }
 }

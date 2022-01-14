@@ -23,9 +23,10 @@ class Game {
             x: canvas.width / 2, y: canvas.height / 2
         }
 
+        const hbDataExtractor = new HitBoxDataExtractor();
+        const spaceshipHitBoxIntervalContainer = hbDataExtractor.extractHitBoxDescriptor(descriptors.spaceship.hitBoxIntervals);
+        const spaceship = new Spaceship(spaceshipHitBoxIntervalContainer, canvasCenter.x, canvasCenter.y);
         const padding = 10;
-        const container = new HitBoxIntervalContainer(descriptors.spaceship.hitBoxIntervals)
-        const spaceship = new Spaceship(container, canvasCenter.x, canvasCenter.y);
         const camera = new Camera(0, 0, canvas.width, canvas.height, padding);
         this.scene = new Scene(canvas, ctx, camera, spaceship);
 
