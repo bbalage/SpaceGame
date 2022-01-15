@@ -11,10 +11,10 @@ class Scene {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera);
-        this.#drawSpaceship();
+        this.#drawSpaceship(true);
     }
 
-    #drawSpaceship() {
+    #drawSpaceship(drawHitBox) {
         this.camera.follow(this.spaceship);
         const spaceshipLocal = this.camera.toCameraView(this.spaceship);
         const spaceshipCenter = {
@@ -33,6 +33,18 @@ class Scene {
             this.spaceship.height
         );
         this.ctx.restore();
+        if (drawHitBox) {
+            this.#drawBox(this.spaceship.getHitBox(), false);
+        }
+    }
+
+    #drawBox(box, isHit) {
+        const localBox = this.camera.toCameraView(box);
+        this.ctx.beginPath();
+        this.ctx.lineWidth = "2";
+        this.ctx.strokeStyle = isHit ? "red" : "blue";
+        this.ctx.rect(localBox.x, localBox.y, box.width, box.height);
+        this.ctx.stroke();
     }
 
     handleInputCtx(inputCtx) {

@@ -8,10 +8,10 @@ const spaceshipDesc = {
             "end": 90,
             "hitBox":
                 {
-                    "x": 0,
-                    "y": 0,
-                    "width": 100,
-                    "height": 200
+                    "x": 5,
+                    "y": 5,
+                    "width": 54,
+                    "height": 70
                 }
         },
         {
@@ -21,8 +21,8 @@ const spaceshipDesc = {
                 {
                     "x": 0,
                     "y": 0,
-                    "width": 200,
-                    "height": 100
+                    "width": 79,
+                    "height": 68
                 }
         },
         {
@@ -32,8 +32,8 @@ const spaceshipDesc = {
                 {
                     "x": 0,
                     "y": 0,
-                    "width": 100,
-                    "height": 200
+                    "width": 79,
+                    "height": 68
                 }
         }
     ]

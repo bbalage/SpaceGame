@@ -125,10 +125,24 @@ describe("Hit box handling classes' unit tests", function() {
                 expect(overlapsCommuted).toBe(pair.overlaps);
             }
         });
+
+        it("Moving object works fine on basic test.", function () {
+            const hitBox = new HitBox(12, 8, 8, 7);
+            const objectPositionX = 10, objectPositionY = 5;
+            const expectedNewHitBoxPositionX = 22, expectedNewHitBoxPositionY = 13;
+
+            hitBox.setPosition(objectPositionX, objectPositionY);
+
+            expect(hitBox.x).toBe(expectedNewHitBoxPositionX);
+            expect(hitBox.y).toBe(expectedNewHitBoxPositionY);
+        });
     });
 
-    describe("HitBoxInterval tests.", function () {
-
+    describe("HitBoxContainer tests.", function () {
+        // TODO: Test public functions of HitBoxContainers.
     });
 
+    describe("HitBoxDataExtractor tests.", function () {
+        // TODO: Test public functions of HitBoxDataExtractor.
+    });
 });

@@ -42,4 +42,12 @@ class Spaceship {
         this.hitBoxContainer.handlePosition(this.x, this.y);
     }
 
+    /**
+     * Return the currently active hit box of the spaceship.
+     * @return {HitBox}
+     */
+    getHitBox() {
+        return this.hitBoxContainer.getCurrentHitBox();
+    }
+
 }
