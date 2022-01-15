@@ -46,8 +46,12 @@ class Spaceship {
      * Return the currently active hit box of the spaceship.
      * @return {HitBox}
      */
-    getHitBox() {
-        return this.hitBoxContainer.getCurrentHitBox();
+    getHitBoxes() {
+        return this.hitBoxContainer.getCurrentHitBoxes();
+    }
+
+    checkHit(hitBox) {
+        return this.hitBoxContainer.checkHit(hitBox);
     }
 
 }

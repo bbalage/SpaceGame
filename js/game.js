@@ -37,6 +37,7 @@ class Game {
 
     loopIteration(inputCtx) {
         this.scene.handleInputCtx(inputCtx);
+        this.scene.advanceScene();
         this.scene.draw();
     }
 }

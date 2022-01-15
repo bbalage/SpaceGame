@@ -47,8 +47,8 @@ class HitBoxContainer {
      * Returns the hit box which should be used now, according to the last seen rotation.
      * @return {HitBox}
      */
-    getCurrentHitBox() {
-        return this.intervals[this.currentIndex].hitBox;
+    getCurrentHitBoxes() {
+        return this.intervals[this.currentIndex].hitBoxes;
     }
 
     /**
@@ -58,7 +58,9 @@ class HitBoxContainer {
      * @param objectPositionY Y coordinate of the object in absolute space.
      */
     handlePosition(objectPositionX, objectPositionY) {
-        this.intervals[this.currentIndex].hitBox.setPosition(objectPositionX, objectPositionY);
+        for (let i in this.intervals[this.currentIndex].hitBoxes) {
+            this.intervals[this.currentIndex].hitBoxes[i].setPosition(objectPositionX, objectPositionY);
+        }
     }
 
     /**
@@ -67,7 +69,12 @@ class HitBoxContainer {
      * @return {boolean}
      */
     checkHit(hitBox) {
-        return this.intervals[this.currentIndex].hitBox.isOverlapping(hitBox);
+        for (let i in this.intervals[this.currentIndex].hitBoxes) {
+            if (this.intervals[this.currentIndex].hitBoxes[i].isOverlapping(hitBox)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -120,18 +127,25 @@ class HitBoxDataExtractor {
             hitBoxIntervals.push({
                 "start": hitBoxIntervalDesc.start,
                 "end": hitBoxIntervalDesc.end,
-                "hitBox": HitBoxDataExtractor.#extractHitBox(hitBoxIntervalDesc.hitBox)
+                "hitBoxes": HitBoxDataExtractor.#extractHitBoxes(hitBoxIntervalDesc.hitBoxes)
             });
         }
         return hitBoxIntervals;
     }
 
-    static #extractHitBox(hitBoxDesc) {
-        return new HitBox(
-            hitBoxDesc.x,
-            hitBoxDesc.y,
-            hitBoxDesc.width,
-            hitBoxDesc.height
-        );
+    static #extractHitBoxes(hitBoxesDesc) {
+        const hitBoxes = [];
+        for (let i = 0; i < hitBoxesDesc.length; i++) {
+            let hitBox = new HitBox(
+                hitBoxesDesc[i].x,
+                hitBoxesDesc[i].y,
+                hitBoxesDesc[i].width,
+                hitBoxesDesc[i].height
+            )
+            hitBoxes.push(
+                hitBox
+            )
+        }
+        return hitBoxes;
     }
 }
