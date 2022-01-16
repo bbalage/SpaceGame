@@ -36,7 +36,7 @@ class HitBoxContainer {
 
     /**
      * Construct from hit box intervals.
-     * @param hitBoxIntervals Argument of form [{start: num1, end: num2, hitBox: hitBox}]
+     * @param hitBoxIntervals Argument of form [{start: num1, end: num2, hitBoxes: [hitBox1, hitBox2, ...]}]
      */
     constructor(hitBoxIntervals) {
         this.intervals = hitBoxIntervals;
