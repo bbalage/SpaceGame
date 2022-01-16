@@ -114,8 +114,9 @@ class HitBoxDataExtractor {
 
     /**
      * Serves to create classes from descriptor data.
-     * @param hitBoxIntervalsDesc The descriptor retrieved from the des
+     * @param hitBoxIntervalsDesc The interval descriptor retrieved from the descriptor object.
      */
+    // TODO: You should not be able to extract a semantically or syntactically invalid descriptor without an error!
     extractHitBoxDescriptor(hitBoxIntervalsDesc) {
         const hitBoxIntervals = HitBoxDataExtractor.#extractHitBoxIntervals(hitBoxIntervalsDesc);
         return new HitBoxContainer(hitBoxIntervals);

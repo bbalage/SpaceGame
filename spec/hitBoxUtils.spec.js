@@ -241,7 +241,86 @@ describe("Hit box handling classes' unit tests", function() {
 
             expect(doesHit).toBeTrue();
         });
-        // TODO: Test handleRotation of HitBoxContainer.
+
+        describe("Rotation handling in HitBoxContainer tests.", function () {
+            it("handleRotation does not rotate when not necessary.", function () {
+                const hitBoxInterval1 = {"start": 0, "end": 90, "hitBoxes": null};
+                const hitBoxInterval2 = {"start": 91, "end": 270, "hitBoxes": null};
+                const hitBoxInterval3 = {"start": 271, "end": 360, "hitBoxes": null};
+                const hitBoxContainer = new HitBoxContainer(
+                    [hitBoxInterval1, hitBoxInterval2, hitBoxInterval3]
+                );
+                const expectedNewIndex = 1;
+
+                hitBoxContainer.currentIndex = 1;
+                hitBoxContainer.handleRotation(100);
+
+                expect(hitBoxContainer.currentIndex).toBe(expectedNewIndex);
+            });
+
+            it("handleRotation does rotate towards the previous value; normal case.", function () {
+                const hitBoxInterval1 = {"start": 0, "end": 90, "hitBoxes": null};
+                const hitBoxInterval2 = {"start": 91, "end": 270, "hitBoxes": null};
+                const hitBoxInterval3 = {"start": 271, "end": 360, "hitBoxes": null};
+                const hitBoxContainer = new HitBoxContainer(
+                    [hitBoxInterval1, hitBoxInterval2, hitBoxInterval3]
+                );
+                const expectedNewIndex = 0;
+
+                hitBoxContainer.currentIndex = 1;
+                hitBoxContainer.handleRotation(70);
+
+                expect(hitBoxContainer.currentIndex).toBe(expectedNewIndex);
+            });
+
+            it("handleRotation does rotate towards the next value; normal case.", function () {
+                const hitBoxInterval1 = {"start": 0, "end": 90, "hitBoxes": null};
+                const hitBoxInterval2 = {"start": 91, "end": 270, "hitBoxes": null};
+                const hitBoxInterval3 = {"start": 271, "end": 360, "hitBoxes": null};
+                const hitBoxContainer = new HitBoxContainer(
+                    [hitBoxInterval1, hitBoxInterval2, hitBoxInterval3]
+                );
+                const expectedNewIndex = 2;
+
+                hitBoxContainer.currentIndex = 1;
+                hitBoxContainer.handleRotation(290);
+
+                expect(hitBoxContainer.currentIndex).toBe(expectedNewIndex);
+            });
+
+            it("handleRotation does rotate towards the next value; exact interval border.", function () {
+                const hitBoxInterval1 = {"start": 0, "end": 90, "hitBoxes": null};
+                const hitBoxInterval2 = {"start": 91, "end": 270, "hitBoxes": null};
+                const hitBoxInterval3 = {"start": 271, "end": 360, "hitBoxes": null};
+                const hitBoxContainer = new HitBoxContainer(
+                    [hitBoxInterval1, hitBoxInterval2, hitBoxInterval3]
+                );
+                const expectedNewIndex = 2;
+
+                hitBoxContainer.currentIndex = 1;
+                hitBoxContainer.handleRotation(271);
+
+                expect(hitBoxContainer.currentIndex).toBe(expectedNewIndex);
+            });
+
+            it("handleRotation does rotate towards the previous value; exact interval border.", function () {
+                const hitBoxInterval1 = {"start": 0, "end": 90, "hitBoxes": null};
+                const hitBoxInterval2 = {"start": 91, "end": 270, "hitBoxes": null};
+                const hitBoxInterval3 = {"start": 271, "end": 360, "hitBoxes": null};
+                const hitBoxContainer = new HitBoxContainer(
+                    [hitBoxInterval1, hitBoxInterval2, hitBoxInterval3]
+                );
+                const expectedNewIndex = 0;
+
+                hitBoxContainer.currentIndex = 1;
+                hitBoxContainer.handleRotation(90);
+
+                expect(hitBoxContainer.currentIndex).toBe(expectedNewIndex);
+            });
+
+            // TODO: Add new tests which make sure any new rotation would be handled well! (now only neighbour switch are handled)
+            // EXPLANATION: These only handle rotating to the next or previous interval.
+        });
     });
 
     describe("HitBoxDataExtractor tests.", function () {
