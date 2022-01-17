@@ -22,7 +22,7 @@ const spaceshipDesc = {
                 ]
         },
         {
-            "start": 91,
+            "start": 90,
             "end": 270,
             "hitBoxes": [
                     {
@@ -34,7 +34,7 @@ const spaceshipDesc = {
                 ]
         },
         {
-            "start": 271,
+            "start": 270,
             "end": 360,
             "hitBoxes": [
                     {

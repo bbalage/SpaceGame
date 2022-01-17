@@ -85,12 +85,17 @@ class HitBoxContainer {
     handleRotation(rotation) {
         const indexDirection = this.#calcSwapDirection(rotation)
         if (indexDirection === 0) return;
-        this.currentIndex += indexDirection;
-        if (this.currentIndex === -1) {
-            this.currentIndex = this.intervals.length - 1;
-        } else if (this.currentIndex === this.intervals.length) {
-            this.currentIndex = 0;
-        }
+        const normalizedRotation = HitBoxContainer.#normalizeRotation(rotation);
+        do {
+            this.currentIndex += indexDirection;
+            if (this.currentIndex === -1) {
+                this.currentIndex = this.intervals.length - 1;
+            } else if (this.currentIndex === this.intervals.length) {
+                this.currentIndex = 0;
+            }
+        } while (!HitBoxContainer.#isInInterval(
+            normalizedRotation, this.intervals[this.currentIndex].start, this.intervals[this.currentIndex].end
+        ));
     }
 
     /**
@@ -104,9 +109,19 @@ class HitBoxContainer {
     #calcSwapDirection(rotation) {
         const start = this.intervals[this.currentIndex].start;
         const end = this.intervals[this.currentIndex].end;
-        if (rotation >= start && rotation < end) return 0;
+        if (HitBoxContainer.#isInInterval(rotation, start, end)) return 0;
         else if (rotation < start) return -1;
-        else if (rotation >= end) return 1;
+        else return 1;
+    }
+
+    static #normalizeRotation(rotation) {
+        if (rotation >= 360) return rotation - 360;
+        else if (rotation < 0) return rotation + 360;
+        else return rotation;
+    }
+
+    static #isInInterval(rotation, start, end) {
+        return rotation >= start && rotation <= end;
     }
 }
 
@@ -125,12 +140,17 @@ class HitBoxDataExtractor {
     static #extractHitBoxIntervals(hitBoxIntervalsDesc) {
         const hitBoxIntervals = [];
         for (let hitBoxIntervalDesc of hitBoxIntervalsDesc) {
+            if (hitBoxIntervalDesc.start === undefined || hitBoxIntervalDesc.end === undefined ||
+                !Array.isArray(hitBoxIntervalDesc.hitBoxes || !hitBoxIntervalDesc.hitBoxes)) {
+                throw new Error("hitBoxIntervalDescriptor is syntactically incorrect.");
+            }
             hitBoxIntervals.push({
                 "start": hitBoxIntervalDesc.start,
                 "end": hitBoxIntervalDesc.end,
                 "hitBoxes": HitBoxDataExtractor.#extractHitBoxes(hitBoxIntervalDesc.hitBoxes)
             });
         }
+        HitBoxDataExtractor.#checkIntervalsSemantically(hitBoxIntervals);
         return hitBoxIntervals;
     }
 
@@ -148,5 +168,18 @@ class HitBoxDataExtractor {
             )
         }
         return hitBoxes;
+    }
+
+    static #checkIntervalsSemantically(hitBoxIntervals) {
+        if (!Array.isArray(hitBoxIntervals) || !hitBoxIntervals) {
+            throw new Error("HitBoxIntervals is not a valid array.");
+        }
+        let start = 0;
+        for (let hitBoxInterval of hitBoxIntervals) {
+            if (hitBoxInterval.start !== start) {
+                throw new Error("HitBoxIntervals are semantically incorrect.");
+            }
+            start = hitBoxInterval.end;
+        }
     }
 }

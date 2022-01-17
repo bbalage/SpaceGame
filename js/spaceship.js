@@ -11,7 +11,7 @@ class Spaceship {
         this.acceleration = this.thrusterForce / this.mass;
         this.xspeed = 0;
         this.yspeed = 0;
-        this.elementaryTurn = 2;
+        this.elementaryTurn = 2; // Must be an integer
         this.sprite = new Image();
         this.sprite.src = "img/spaceship.png";
         this.hitBoxContainer = hitBoxContainer;

@@ -318,12 +318,14 @@ describe("Hit box handling classes' unit tests", function() {
                 expect(hitBoxContainer.currentIndex).toBe(expectedNewIndex);
             });
 
-            // TODO: Add new tests which make sure any new rotation would be handled well! (now only neighbour switch are handled)
+            // TODO: Add new tests which make sure any new rotation would be handled well! (now only neighbour switch is handled)
             // EXPLANATION: These only handle rotating to the next or previous interval.
         });
     });
 
     describe("HitBoxDataExtractor tests.", function () {
-        // TODO: Test public functions of HitBoxDataExtractor.
+        it("Correct descriptor is accepted.", function () {
+
+        });
     });
 });
