@@ -1,13 +1,44 @@
 class Scene {
 
-    constructor(canvas, ctx, camera, spaceship) {
+    constructor(canvas, ctx, camera, spaceship, asteroid) {
         this.canvas = canvas;
         this.ctx = ctx;
         this.camera = camera;
         this.spaceship = spaceship;
+        this.asteroid = asteroid;
         this.canvasLogger = new CanvasLogger();
-        this.testHitBox = new HitBox(300, 300, 50, 50);
-        this.hitBoxHit = false;
+        this.testHitBox = new HitBox(100, 100, 100, 100);
+    }
+
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera, this.asteroid);
+        this.#drawSpaceship(true);
+        this.#drawAsteroids();
+        this.asteroid.rotate(1);
+        this.asteroid.moveAsteroid();
+        this.#drawBox(this.testHitBox, this.hitBoxHit);
+    }
+
+    #drawAsteroids() {
+
+            const asteroidLocal = this.camera.toCameraView(this.asteroid);
+            const asteroidCenter = {
+                x: asteroidLocal.x + this.asteroid.width / 2 ,
+                y: asteroidLocal.y + this.asteroid.height / 2
+            }
+            this.ctx.save();
+            this.ctx.translate(asteroidCenter.x, asteroidCenter.y);
+            this.ctx.rotate(this.asteroid.rotation*Math.PI/180);
+            this.ctx.translate(-asteroidCenter.x, -asteroidCenter.y);
+            this.ctx.drawImage(
+                this.asteroid.sprite,
+                asteroidLocal.x,
+                asteroidLocal.y,
+                this.asteroid.width,
+                this.asteroid.height
+            );
+            this.ctx.restore();
     }
 
     handleInputCtx(inputCtx) {
@@ -18,13 +49,6 @@ class Scene {
     advanceScene() {
         this.spaceship.moveSpaceship();
         this.#checkHits();
-    }
-
-    draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera);
-        this.#drawSpaceship(true);
-        this.#drawBox(this.testHitBox, this.hitBoxHit);
     }
 
     #handleTurn(inputCtx) {

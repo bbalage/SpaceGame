@@ -23,12 +23,13 @@ class Game {
             x: canvas.width / 2, y: canvas.height / 2
         }
 
+        const padding = 250;
+        const asteroid = new Asteroid(100, 100);
         const hbDataExtractor = new HitBoxDataExtractor();
         const spaceshipHitBoxContainer = hbDataExtractor.extractHitBoxDescriptor(descriptors.spaceship.hitBoxIntervals);
         const spaceship = new Spaceship(spaceshipHitBoxContainer, canvasCenter.x, canvasCenter.y);
-        const padding = 10;
         const camera = new Camera(0, 0, canvas.width, canvas.height, padding);
-        this.scene = new Scene(canvas, ctx, camera, spaceship);
+        this.scene = new Scene(canvas, ctx, camera, spaceship, asteroid);
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
