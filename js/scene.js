@@ -7,37 +7,19 @@ class Scene {
         this.spaceship = spaceship;
         this.asteroid = asteroid;
         this.canvasLogger = new CanvasLogger();
+        this.testHitBox = new HitBox(100, 100, 100, 100);
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.canvasLogger.draw(this.ctx, this.canvas, this.spaceship, this.camera, this.asteroid);
-        this.#drawSpaceship();
+        this.#drawSpaceship(true);
         this.#drawAsteroids();
         this.asteroid.rotate(1);
         this.asteroid.moveAsteroid();
+        this.#drawBox(this.testHitBox, this.hitBoxHit);
     }
 
-    #drawSpaceship() {
-        this.camera.follow(this.spaceship);
-        const spaceshipLocal = this.camera.toCameraView(this.spaceship);
-        const spaceshipCenter = {
-            x: spaceshipLocal.x + this.spaceship.width / 2,
-            y: spaceshipLocal.y + this.spaceship.height / 2
-        }
-        this.ctx.save();
-        this.ctx.translate(spaceshipCenter.x, spaceshipCenter.y);
-        this.ctx.rotate(this.spaceship.rotation*Math.PI/180);
-        this.ctx.translate(-spaceshipCenter.x, -spaceshipCenter.y);
-        this.ctx.drawImage(
-            this.spaceship.sprite,
-            spaceshipLocal.x,
-            spaceshipLocal.y,
-            this.spaceship.width,
-            this.spaceship.height
-        );
-        this.ctx.restore();
-    }
     #drawAsteroids() {
 
             const asteroidLocal = this.camera.toCameraView(this.asteroid);
@@ -62,7 +44,11 @@ class Scene {
     handleInputCtx(inputCtx) {
         this.#handleTurn(inputCtx);
         this.#handleMove(inputCtx);
+    }
+
+    advanceScene() {
         this.spaceship.moveSpaceship();
+        this.#checkHits();
     }
 
     #handleTurn(inputCtx) {
@@ -89,5 +75,45 @@ class Scene {
             this.spaceship.xspeed -= Math.sin(this.spaceship.rotation*Math.PI/180) * this.spaceship.acceleration;
             this.spaceship.yspeed += Math.cos(this.spaceship.rotation*Math.PI/180) * this.spaceship.acceleration;
         }
+    }
+
+    #checkHits() {
+        this.hitBoxHit = this.spaceship.checkHit(this.testHitBox);
+    }
+
+    #drawSpaceship(drawHitBox) {
+        this.camera.follow(this.spaceship);
+        const spaceshipLocal = this.camera.toCameraView(this.spaceship);
+        const spaceshipCenter = {
+            x: spaceshipLocal.x + this.spaceship.width / 2,
+            y: spaceshipLocal.y + this.spaceship.height / 2
+        }
+        this.ctx.save();
+        this.ctx.translate(spaceshipCenter.x, spaceshipCenter.y);
+        this.ctx.rotate(this.spaceship.rotation*Math.PI/180);
+        this.ctx.translate(-spaceshipCenter.x, -spaceshipCenter.y);
+        this.ctx.drawImage(
+            this.spaceship.sprite,
+            spaceshipLocal.x,
+            spaceshipLocal.y,
+            this.spaceship.width,
+            this.spaceship.height
+        );
+        this.ctx.restore();
+        if (drawHitBox) {
+            const hitBoxes = this.spaceship.getHitBoxes();
+            for (let hitBox of hitBoxes) {
+                this.#drawBox(hitBox, false);
+            }
+        }
+    }
+
+    #drawBox(box, isHit) {
+        const localBox = this.camera.toCameraView(box);
+        this.ctx.beginPath();
+        this.ctx.lineWidth = "2";
+        this.ctx.strokeStyle = isHit ? "red" : "blue";
+        this.ctx.rect(localBox.x, localBox.y, box.width, box.height);
+        this.ctx.stroke();
     }
 }

@@ -1,5 +1,5 @@
 const game = new Game();
-game.init();
+game.init(descriptors);
 
 function gameLoop() {
     game.loopIteration(inputCtx);
