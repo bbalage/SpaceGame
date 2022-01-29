@@ -3,12 +3,12 @@ class Asteroid {
     constructor(startingX, startingY) {
         this.x = startingX;
         this.y = startingY;
-        this.width = 281;
-        this.height = 191;
+        this.width = 140;
+        this.height = 95;
         this.rotation = 0;
-        this.xspeed = 10;
-        this.yspeed = 10;
-        this.elementaryTurn = 2;
+        this.xspeed = 0.1;
+        this.yspeed = 0.1;
+        this.elementaryTurn = 0.05;
         this.sprite = new Image();
         this.sprite.src = "img/asteroid2.png";
     }

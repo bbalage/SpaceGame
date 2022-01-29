@@ -38,17 +38,25 @@ class Scene {
         );
         this.ctx.restore();
     }
-
     #drawAsteroids() {
 
-        this.ctx.drawImage(
-            this.asteroid.sprite,
-            0,
-            0,
-            this.asteroid.width,
-            this.asteroid.height
-        );
-
+            const asteroidLocal = this.camera.toCameraView(this.asteroid);
+            const asteroidCenter = {
+                x: asteroidLocal.x + this.asteroid.width / 2 ,
+                y: asteroidLocal.y + this.asteroid.height / 2
+            }
+            this.ctx.save();
+            this.ctx.translate(asteroidCenter.x, asteroidCenter.y);
+            this.ctx.rotate(this.asteroid.rotation*Math.PI/180);
+            this.ctx.translate(-asteroidCenter.x, -asteroidCenter.y);
+            this.ctx.drawImage(
+                this.asteroid.sprite,
+                asteroidLocal.x,
+                asteroidLocal.y,
+                this.asteroid.width,
+                this.asteroid.height
+            );
+            this.ctx.restore();
     }
 
     handleInputCtx(inputCtx) {

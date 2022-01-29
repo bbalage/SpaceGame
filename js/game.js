@@ -23,7 +23,7 @@ class Game {
             x: canvas.width / 2, y: canvas.height / 2
         }
 
-        const padding = 10;
+        const padding = 250;
         const spaceShip = new Spaceship(canvasCenter.x, canvasCenter.y);
         const asteroid = new Asteroid(100, 100);
         const camera = new Camera(0, 0, canvas.width, canvas.height, padding);
